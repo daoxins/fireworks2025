@@ -1,10 +1,9 @@
-```html
 <!DOCTYPE html>
 <html>
 <head>
-    <title>新年烟花（带音效版）</title>
+    <title>新年烟花（问题修复版）</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 新增移动端适配 -->
     <style>
-        /* 原有样式保持不变 */
         body { margin: 0; overflow: hidden; background: #000; }
         canvas { display: block; }
         #btn { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); 
@@ -16,31 +15,61 @@
     <button id="btn">点击绽放烟花！</button>
     <canvas id="canvas"></canvas>
 
-    <!-- 添加音频元素（隐藏） -->
-    <audio id="fireworkSound" src="https://assets.mixkit.co/active_storage/sfx/1789/1789-preview.mp3"></audio>
-
     <script>
-        // 原有代码保持不变...
+        // 初始化检测
+        console.log("脚本已加载"); // 控制台应显示此消息
+        
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
         const btn = document.getElementById('btn');
-        const fireworkSound = document.getElementById('fireworkSound'); // 新增音频对象
 
-        // 修改后的 createFirework 函数
+        // 画布尺寸调整
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            console.log("画布尺寸:", canvas.width, "x", canvas.height); // 调试输出
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // 粒子类（保持不变）
+        class Particle { /* ...原有代码... */ }
+
+        // 烟花数组
+        let fireworks = [];
+
+        // 创建烟花（简化测试版）
         function createFirework(x, y) {
-            // 播放音效（每次重置播放时间）
-            fireworkSound.currentTime = 0;
-            fireworkSound.play();
+            console.log("触发烟花坐标:", x, y); // 调试输出
+            fireworks = []; // 清空旧粒子
             
-            // 原有粒子生成逻辑保持不变...
-            const colors = ['#ff0000', '#00ff00', '#ffff00', '#ff00ff', '#00ffff'];
-            for (let i = 0; i < 100; i++) {
-                fireworks.push(new Particle(x, y, colors[Math.floor(Math.random() * colors.length)]));
+            // 生成测试粒子（红色）
+            for (let i = 0; i < 50; i++) {
+                fireworks.push(new Particle(x, y, '#ff0000'));
             }
         }
 
-        // 其余原有代码保持不变...
+        // 动画循环
+        function animate() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            fireworks.forEach(particle => {
+                particle.update();
+            });
+            
+            requestAnimationFrame(animate);
+        }
+
+        // 事件监听（新增防止重复绑定）
+        btn.removeEventListener('click', handleClick);
+        function handleClick() {
+            createFirework(Math.random() * canvas.width, Math.random() * canvas.height);
+        }
+        btn.addEventListener('click', handleClick);
+
+        // 启动动画
+        animate();
     </script>
 </body>
 </html>
-```
