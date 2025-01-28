@@ -1,0 +1,46 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>新年烟花（带音效版）</title>
+    <style>
+        /* 原有样式保持不变 */
+        body { margin: 0; overflow: hidden; background: #000; }
+        canvas { display: block; }
+        #btn { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); 
+               padding: 10px 20px; background: #ff4444; color: white; border: none; 
+               border-radius: 5px; cursor: pointer; z-index: 100; }
+    </style>
+</head>
+<body>
+    <button id="btn">点击绽放烟花！</button>
+    <canvas id="canvas"></canvas>
+
+    <!-- 添加音频元素（隐藏） -->
+    <audio id="fireworkSound" src="https://assets.mixkit.co/active_storage/sfx/1789/1789-preview.mp3"></audio>
+
+    <script>
+        // 原有代码保持不变...
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const btn = document.getElementById('btn');
+        const fireworkSound = document.getElementById('fireworkSound'); // 新增音频对象
+
+        // 修改后的 createFirework 函数
+        function createFirework(x, y) {
+            // 播放音效（每次重置播放时间）
+            fireworkSound.currentTime = 0;
+            fireworkSound.play();
+            
+            // 原有粒子生成逻辑保持不变...
+            const colors = ['#ff0000', '#00ff00', '#ffff00', '#ff00ff', '#00ffff'];
+            for (let i = 0; i < 100; i++) {
+                fireworks.push(new Particle(x, y, colors[Math.floor(Math.random() * colors.length)]));
+            }
+        }
+
+        // 其余原有代码保持不变...
+    </script>
+</body>
+</html>
+```
